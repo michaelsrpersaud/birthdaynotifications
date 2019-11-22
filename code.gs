@@ -7,9 +7,10 @@ function sendEmail() {
   // Fetch values for each row in the Range.
   var data = dataRange.getValues();
 
-  var update_cell = sheet.getRange('H5');
+  var update_cell = sheet.getRange('H6');
   var subject ='';
   var message ='';
+  var cc_user = SpreadsheetApp.getActiveSheet().getRange('H5').getValue();
 
   for (i in data) {
     var row = data[i];
@@ -32,7 +33,7 @@ function sendEmail() {
               message =row[2];
             }
 
-      MailApp.sendEmail(emailAddress, subject, message);
+      MailApp.sendEmail(emailAddress, subject, message, {cc:cc_user});
       Logger.log('SENT: '+emailAddress+'  '+subject+'  '+message)
       // Quick audit
       update_cell.setValue(SsheetDate);
