@@ -16,9 +16,15 @@ function sendEmail() {
     var row = data[i];
     var date = new Date();
     var sheetDate = new Date(row[1]);
-    Sdate=Utilities.formatDate(date,'GMT-0500','yyyy-MM-dd')
-    SsheetDate=Utilities.formatDate(sheetDate,'GMT-0500', 'yyyy-MM-dd')
-    Logger.log('dates: ' + Sdate+' =? '+SsheetDate)
+    //    Dates will not match as entry could be done in 2018 and then another added in 2019
+    //    with Google adding the year automatically so that the comparison of today and the
+    //    date in the cell would have mismatched years
+    //    Sdate=Utilities.formatDate(date,'GMT-0500','yyyy-MM-dd')
+    //    SsheetDate=Utilities.formatDate(sheetDate,'GMT-0500', 'yyyy-MM-dd')
+
+    Sdate=Utilities.formatDate(date,'GMT-0500','MM-dd');
+    SsheetDate=Utilities.formatDate(sheetDate,'GMT-0500', 'MM-dd');
+    Logger.log('dates: ' + Sdate+' =? '+SsheetDate);
 
     if (Sdate == SsheetDate){
       var emailAddress = SpreadsheetApp.getActiveSheet().getRange('H2').getValue();     // Get Email to send to
